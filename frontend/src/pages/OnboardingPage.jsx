@@ -207,7 +207,6 @@ const OnboardingPage = () => {
               )}
             </button>
           </form>
-          /
         </div>
       </div>
     </div>
