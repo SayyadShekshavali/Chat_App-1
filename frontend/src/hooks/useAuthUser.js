@@ -13,7 +13,7 @@ const useAuthUser = () => {
 
   return {
     isLoading: authUser.isLoading,
-    authUser: authUser.data?.user,
+    authUser: authUser.data?.user || {},
     refetch: authUser.refetch,
   };
 };
