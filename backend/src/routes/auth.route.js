@@ -17,9 +17,5 @@ Router.get("/me", protectRoute, (req, res) => {
   res.status(200).json({ success: true, user: req.user });
   console.log("User is logged in ");
 });
-app.get("/me", protectRoute, (req, res) => {
-  res.set("Cache-Control", "no-store");
-  res.json({ user: req.user });
-});
 
 export default Router;

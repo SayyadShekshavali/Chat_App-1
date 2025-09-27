@@ -6,6 +6,7 @@ import chatRoutes from "./routes/chat.route.js";
 import { connectDB } from "./utils/MDB.connect.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { protectRoute } from "./middleware/auth.middleware.js";
 dotenv.config();
 import path from "path";
 const __dirname = path.resolve();
@@ -24,6 +25,11 @@ app.use(
     credentials: true,
   })
 );
+
+app.get("api/auth/me", protectRoute, (req, res) => {
+  res.set("Cache-Control", "no-store");
+  res.json({ user: req.user });
+});
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
   app.get("*", (req, res) => {
