@@ -158,11 +158,12 @@ const OnboardingPage = () => {
                   className="select select-bordered w-full"
                 >
                   <option value={""}>Select Ur native Language</option>
-                  {LANGUAGES.map((lang) => (
-                    <option key={`native-${lang}`} value={lang.toLowerCase()}>
-                      {lang}
-                    </option>
-                  ))}
+                  {Array.isArray(LANGUAGES) &&
+                    LANGUAGES.map((lang) => (
+                      <option key={`native-${lang}`} value={lang.toLowerCase()}>
+                        {lang}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
