@@ -12,6 +12,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { LANGUAGES } from "../constants";
+console.log("LANGUAGES:", LANGUAGES, Array.isArray(LANGUAGES));
+
 import { useNavigate } from "react-router-dom";
 const OnboardingPage = () => {
   const navigate = useNavigate();
