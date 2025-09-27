@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://chat-app-1-3tjs.onrender.com/", // your frontend domain
+  "https://chat-app-1-3tjs.onrender.com", // your frontend domain
 ];
 app.use(
   cors({
@@ -26,7 +26,7 @@ app.use(
   })
 );
 
-app.get("api/auth/me", protectRoute, (req, res) => {
+app.get("/api/auth/me", protectRoute, (req, res) => {
   res.set("Cache-Control", "no-store");
   res.json({ user: req.user });
 });

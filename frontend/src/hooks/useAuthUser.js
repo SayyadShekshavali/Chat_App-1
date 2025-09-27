@@ -8,6 +8,7 @@ const useAuthUser = () => {
     retry: false,
     staleTime: 0, // always fetch fresh data
     cacheTime: 0, // don’t cache old data
+    refetchOnWindowFocus: true,
   });
 
   return {
