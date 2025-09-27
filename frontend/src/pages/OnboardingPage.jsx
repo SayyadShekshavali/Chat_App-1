@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 const OnboardingPage = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthUser();
+  console.log(authUser);
   const [formState, setFormState] = useState({
     fullName: authUser?.fullName || "",
     bio: authUser?.bio || "",
