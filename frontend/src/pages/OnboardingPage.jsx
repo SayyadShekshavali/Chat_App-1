@@ -1,7 +1,7 @@
 import React from "react";
 import useAuthUser from "../hooks/useAuthUser";
 import { useState } from "react";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { compeleteOnboading } from "../lib/api";
 import {
@@ -25,14 +25,15 @@ const OnboardingPage = () => {
     Profilepic: authUser?.Profilepic || "",
   });
 
+  const queryClient = useQueryClient();
   const { mutate: onboadingMutation, isPending } = useMutation({
     mutationFn: compeleteOnboading,
     onSuccess: () => {
       toast.success("Profile onboarded successfully");
-      QueryClient.invalidateQueries({ queryKey: ["authUser"] });
+      queryClient.invalidateQueries({ queryKey: ["authUser"] });
       navigate("/");
     },
-    inError: (error) => {
+    onError: (error) => {
       console.log(error);
     },
   });
@@ -132,11 +133,12 @@ const OnboardingPage = () => {
                   className="select select-bordered w-full"
                 >
                   <option value={""}>Select Ur native Language</option>
-                  {LANGUAGES.map((lang) => (
-                    <option key={`native-${lang}`} value={lang.toLowerCase()}>
-                      {lang}
-                    </option>
-                  ))}
+                  {Array.isArray(LANGUAGES) &&
+                    LANGUAGES.map((lang) => (
+                      <option key={`native-${lang}`} value={lang.toLowerCase()}>
+                        {lang}
+                      </option>
+                    ))}
                 </select>
               </div>
               {/**Learning Languages */}
