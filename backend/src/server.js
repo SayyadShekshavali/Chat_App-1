@@ -14,9 +14,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://chat-app-1-3tjs.onrender.com/", // your frontend domain
+];
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
