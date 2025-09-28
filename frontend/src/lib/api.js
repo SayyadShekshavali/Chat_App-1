@@ -16,7 +16,9 @@ export const logout = async () => {
 };
 export const getAuthUser = async () => {
   try {
-    const res = await axiosInstance.get("/auth/me");
+    const res = await axiosInstance.get("/auth/me", {
+      headers: { "Cache-Control": "no-cache" },
+    });
     return res.data;
   } catch (error) {
     console.log("Error in getAuthUser", error);
@@ -35,11 +37,11 @@ export const getUserFriends = async () => {
 };
 export const getRecommendedUsers = async () => {
   const res = await axiosInstance.get("/users");
-  return res.data;
+  return res.data.users || [];
 };
 export const getOutgoingFriendReqs = async () => {
   const res = await axiosInstance.get("/users/outgoing-friend-requests");
-  return res.data;
+  return res.data.requests || [];
 };
 
 export const sendFriendRequest = async (userId) => {

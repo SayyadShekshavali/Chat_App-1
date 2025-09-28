@@ -41,13 +41,20 @@ const HomePage = () => {
   });
   useEffect(() => {
     const outgoingIds = new Set();
-    if (outgoingFriendReqs && outgoingFriendReqs.length > 0) {
+    if (Array.isArray(outgoingFriendReqs)) {
       outgoingFriendReqs.forEach((req) => {
         outgoingIds.add(req.recipient._id);
       });
       setOutgoingRequests(outgoingIds);
+    } else {
+      console.warn(
+        "Expected outgoingFriendReqs to be an array but got:",
+        outgoingFriendReqs
+      );
     }
   }, [outgoingFriendReqs]);
+  console.log("outgoingFriendReqs:", outgoingFriendReqs);
+
   return (
     <div className="p-4 sm:p-6 lg:p-8 ">
       <div className="container mx-auto space-y-10">
@@ -72,9 +79,16 @@ const HomePage = () => {
           </>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {friends.map((friend) => (
-              <FriendCard key={friend._id} friend={friend} />
-            ))}
+            {Array.isArray(friends) && friends.length > 0 ? (
+              friends.map((friend) => (
+                <FriendCard key={friend._id} friend={friend} />
+              ))
+            ) : (
+              <>
+                <p className="text-center">No Friends yet</p>
+                <NoFriend />
+              </>
+            )}
           </div>
         )}
         <section>
