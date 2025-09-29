@@ -3,8 +3,8 @@ import User from "../models/User.js";
 import FriendRequest from "../models/Friends.js";
 export const getRocommendedUsers = async (req, res) => {
   try {
-    const currentUserId = req.user.id;
-    const currentUser = req.user;
+    const currentUserId = req.user._id;
+    const currentUser = await User.findById(currentUserId).select("friends");
     const recommemdedUser = await User.find({
       $and: [
         { _id: { $ne: currentUserId } },
@@ -22,7 +22,7 @@ export const getMyfriends = async (req, res) => {
   try {
     console.log("req.user:", req.user);
 
-    const user = await User.findById(req.user.id)
+    const user = await User.findById(req.user._id)
       .select("friends")
       .populate(
         "friends",
@@ -37,10 +37,10 @@ export const getMyfriends = async (req, res) => {
 
 export const sendFriendRequest = async (req, res) => {
   try {
-    const myId = req.user.id;
+    const myId = req.user._id;
     const recipientId = req.params.id;
     console.log("recipientId:", req.params.id);
-    console.log("senderId:", req.user.id);
+    console.log("senderId:", req.user._id);
 
     if (myId == recipientId) {
       return res
@@ -51,11 +51,12 @@ export const sendFriendRequest = async (req, res) => {
     if (!recipient) {
       return res.status(400).json({ message: "Recipient not found" });
     }
-    if (recipient.friends.includes(myId)) {
+    if (recipient.friends.some((fid) => fid.toString() === myId.toString())) {
       return res
         .status(400)
-        .json({ message: "You are Already friends with this User" });
+        .json({ message: "You are already friends with this user" });
     }
+
     const existingRequest = await FriendRequest.findOne({
       $or: [
         { sender: myId, recipient: recipientId },
@@ -86,7 +87,7 @@ export const acceptFriendRequest = async (req, res) => {
       return res.status(404).json({ message: "Friend request not found" });
     }
 
-    if (friendRequest.recipient.toString() != req.user.id) {
+    if (friendRequest.recipient.toString() !== req.user._id.toString()) {
       return res
         .status(403)
         .json({ message: "You are not authorized to accept this request" });
@@ -110,14 +111,14 @@ export const acceptFriendRequest = async (req, res) => {
 export const getFriendRequests = async (req, res) => {
   try {
     const incomingReqs = await FriendRequest.find({
-      recipient: req.user.id,
+      recipient: req.user._id,
       status: "pending",
     }).populate(
       "sender",
       "fullName Profilepic nativeLanguage learningLanguage"
     );
     const acceptedReqs = await FriendRequest.find({
-      sender: req.user.id,
+      sender: req.user._id,
       status: "accepted",
     }).populate("recipient", "fullName Profilepic");
     res.status(200).json({ incomingReqs, acceptedReqs });
@@ -130,7 +131,7 @@ export const getFriendRequests = async (req, res) => {
 export const getOutgoingFriendReqs = async (req, res) => {
   try {
     const outgoingReqs = await FriendRequest.find({
-      sender: req.user.id,
+      sender: req.user._id,
       status: "pending",
     }).populate(
       "recipient",

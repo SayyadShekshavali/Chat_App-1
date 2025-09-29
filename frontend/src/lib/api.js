@@ -33,15 +33,16 @@ export const compeleteOnboading = async (formState) => {
 
 export const getUserFriends = async () => {
   const res = await axiosInstance.get("/users/friends");
-  return res.data;
+  return Array.isArray(res.data) ? res.data : [];
 };
 export const getRecommendedUsers = async () => {
   const res = await axiosInstance.get("/users");
-  return res.data.users || [];
+  return Array.isArray(res.data) ? res.data : [];
 };
+
 export const getOutgoingFriendReqs = async () => {
   const res = await axiosInstance.get("/users/outgoing-friend-requests");
-  return res.data.requests || [];
+  return Array.isArray(res.data) ? res.data : [];
 };
 
 export const sendFriendRequest = async (userId) => {
@@ -56,7 +57,7 @@ export const getFriendRequests = async () => {
 
 export const acceptFriendRequest = async (requestId) => {
   const res = await axiosInstance.put(
-    `users/friends-request/${requestId}/accept`
+    `users/friend-requests/${requestId}/accept`
   );
   return res.data;
 };

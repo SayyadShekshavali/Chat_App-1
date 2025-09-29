@@ -17,7 +17,7 @@ router.get("/", getRocommendedUsers);
 router.get("/friends", getMyfriends);
 router.post("/friend-requests/:id", sendFriendRequest);
 router.get("/friend-requests", getFriendRequests);
-router.put("/friends-request/:id/accept", acceptFriendRequest);
+router.put("/friend-requests/:id/accept", acceptFriendRequest);
 
 router.get("/outgoing-friend-requests", getOutgoingFriendReqs);
 
