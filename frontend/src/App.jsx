@@ -14,7 +14,7 @@ import PageLoader from "./components/PageLoader.jsx";
 import useAuthUser from "./hooks/useAuthUser.js";
 import { useThemeStore } from "./store/useThemeStore.js";
 import NotificationsPage from "./pages/NotificationsPage.jsx";
-import FriendCard from "./components/FriendCard.jsx";
+import FriendsPage from "./components/FriendsPage.jsx";
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
   const { theme } = useThemeStore();
@@ -76,7 +76,7 @@ const App = () => {
           path="/friends"
           element={
             isAuthenticated && isOnboarded ? (
-              <FriendCard />
+              <FriendsPage />
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
