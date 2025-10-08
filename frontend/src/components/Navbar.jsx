@@ -8,15 +8,20 @@ import { Link } from "react-router-dom";
 import { ShipWheelIcon } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import ThemeSelector from "./ThemeSelector.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { authUser } = useAuthUser();
   const location = useLocation();
   const isChatpage = location.pathname?.startsWith("/chat");
   const queryClient = useQueryClient();
   const { mutate: logoutMutation } = useMutation({
     mutationFn: logout,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["authUser"] });
+      navigate("/login");
+    },
   });
   return (
     <nav className="bg-base-200 border-b border-base-300 sticky top-0 z-30 h-16 flex items-center px-4 sm:px-6 lg:px-8">

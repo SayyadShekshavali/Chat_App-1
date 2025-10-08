@@ -6,7 +6,6 @@ export async function signup(req, res) {
   const { email, password, fullName } = req.body;
   console.log("Front-end data:", req.body);
   try {
-   
     if (!email || !password || !fullName) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -108,7 +107,11 @@ export async function login(req, res) {
 }
 
 export function logout(req, res) {
-  res.clearCookie("jwt");
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    secure: process.env.NODE_ENV === "production",
+  });
   res.status(200).json({ success: true, message: "Logout successful" });
 }
 
