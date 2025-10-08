@@ -22,7 +22,7 @@ import { getLanguageFlag } from "../components/FriendCard";
 const HomePage = () => {
   const queryClient = useQueryClient();
   const [outgoingRequests, setOutgoingRequests] = useState(new Set());
-  const { data: friends = [], isLoading: loadingFriends } = useQuery({
+  const { data: friends, isLoading: loadingFriends } = useQuery({
     queryKey: ["friends"],
     queryFn: getUserFriends,
   });

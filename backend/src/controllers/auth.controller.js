@@ -6,6 +6,7 @@ export async function signup(req, res) {
   const { email, password, fullName } = req.body;
   console.log("Front-end data:", req.body);
   try {
+   
     if (!email || !password || !fullName) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -114,7 +115,6 @@ export function logout(req, res) {
 export async function onboard(req, res) {
   try {
     const userId = req.user._id;
-
     const { fullName, bio, nativeLanguage, learningLanguage, location } =
       req.body;
     console.log("Onboarding data:", req.body);

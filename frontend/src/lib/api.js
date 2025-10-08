@@ -32,7 +32,11 @@ export const compeleteOnboading = async (formState) => {
 };
 
 export const getUserFriends = async () => {
-  const res = await axiosInstance.get("/users/friends");
+  const res = await axiosInstance.get("/users/friends", {
+    headers: {
+      "Cache-Control": "no-cache",
+    },
+  });
   return Array.isArray(res.data) ? res.data : [];
 };
 export const getRecommendedUsers = async () => {

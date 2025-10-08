@@ -20,6 +20,7 @@ export const getRocommendedUsers = async (req, res) => {
 };
 export const getMyfriends = async (req, res) => {
   try {
+    console.log("➡️ getMyfriends API hit");
     console.log("req.user:", req.user);
 
     const user = await User.findById(req.user._id)
@@ -28,6 +29,7 @@ export const getMyfriends = async (req, res) => {
         "friends",
         "fullName Profilepic nativeLanguage learningLanguage"
       );
+    console.log("Populated friends:", user.friends);
     res.status(200).json(user.friends);
   } catch (error) {
     console.log("Error in getFriends controller", error.message);
