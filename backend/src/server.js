@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
-  "https://chat-app-1-sepia.vercel.app/",
+  "https://chat-app-1-sepia.vercel.app",
   // your frontend domain
 ];
 app.use(

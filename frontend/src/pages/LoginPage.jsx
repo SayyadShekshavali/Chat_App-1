@@ -35,9 +35,9 @@ const LoginPage = () => {
           {/* Login Form */}
           <form onSubmit={handleLogin} className="space-y-6">
             {error && (
-              <div className="alert alert-error shadow-lg mb-4">
-                <span>{error}</span>
-              </div>
+              <span>
+                {error?.response?.data?.message || "Something went wrong"}
+              </span>
             )}
 
             <div>

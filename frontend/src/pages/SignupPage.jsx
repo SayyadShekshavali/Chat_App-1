@@ -43,10 +43,11 @@ const SignupPage = () => {
           </div>
           {/*Error Message*/}
           {error && (
-            <div className="alert alert-error mb-4">
-              <span>{error.response.data.message}</span>
-            </div>
+            <span>
+              {error?.response?.data?.message || "Something went wrong"}
+            </span>
           )}
+
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
